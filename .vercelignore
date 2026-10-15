@@ -1,0 +1,15 @@
+.git
+.github
+.claude
+CLAUDE.md
+boost.json
+.mcp.json
+.env
+.env.*
+tests
+phpunit.xml
+.phpunit.result.cache
+.editorconfig
+README.md
+/node_modules
+/vendor
