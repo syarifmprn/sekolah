@@ -38,7 +38,8 @@ class AlumniController extends Controller
 
         $data = $query->paginate(10)->withQueryString();
 
-        $tahunList = Alumni::select('tahun_lulus')
+        $tahunList = Alumni::whereNotNull('tahun_lulus')
+            ->select('tahun_lulus')
             ->distinct()
             ->orderBy('tahun_lulus', 'desc')
             ->pluck('tahun_lulus');
@@ -53,7 +54,7 @@ class AlumniController extends Controller
         $stats = [
             'total_alumni' => Alumni::count(),
             'total_tampil' => Alumni::where('tampil', 'ya')->count(),
-            'total_angkatan' => Alumni::distinct('tahun_lulus')->count('tahun_lulus'),
+            'total_angkatan' => Alumni::whereNotNull('tahun_lulus')->distinct()->count('tahun_lulus'),
             'total_testimoni' => Alumni::whereNotNull('testimoni')->where('testimoni', '!=', '')->count(),
         ];
 

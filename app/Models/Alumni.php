@@ -49,6 +49,10 @@ class Alumni extends Model
             return null;
         }
 
-        return asset('storage/' . $this->foto);
+        if (str_starts_with($this->foto, 'http://') || str_starts_with($this->foto, 'https://')) {
+            return $this->foto;
+        }
+
+        return asset('storage/' . ltrim($this->foto, '/'));
     }
 }

@@ -176,7 +176,7 @@
                                                 class="w-10 h-10 rounded-full object-cover border border-gray-200 shrink-0">
                                         @else
                                             <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 font-bold flex items-center justify-center border border-blue-100 shrink-0 uppercase text-xs">
-                                                {{ substr($item->nama, 0, 2) }}
+                                                {{ mb_substr($item->nama ?? 'A', 0, 2) }}
                                             </div>
                                         @endif
                                         <div>
