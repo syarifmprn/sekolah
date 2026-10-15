@@ -23,6 +23,76 @@
     
     <style>
         .topbar-bg { background-color: #1c3faa; }
+
+        /* Mobile Drawer & Backdrop Styling */
+        #mobile-menu-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 9998;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #mobile-menu-backdrop.active {
+            display: block;
+            opacity: 1;
+        }
+
+        #mobile-menu-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 85%;
+            max-width: 360px;
+            background-color: #ffffff;
+            box-shadow: -6px 0 30px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            transform: translateX(100%);
+            -webkit-transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            visibility: hidden;
+        }
+        #mobile-menu-panel.active {
+            transform: translateX(0);
+            -webkit-transform: translateX(0);
+            visibility: visible;
+        }
+
+        .mobile-submenu {
+            display: none;
+        }
+        .mobile-submenu.open {
+            display: block;
+        }
+
+        /* Desktop View: min-width 1024px */
+        @media (min-width: 1024px) {
+            #mobile-menu-toggle {
+                display: none !important;
+            }
+            #mobile-menu-panel, #mobile-menu-backdrop {
+                display: none !important;
+            }
+            .desktop-nav {
+                display: flex !important;
+            }
+        }
+
+        /* Mobile and Tablet View: max-width 1023px */
+        @media (max-width: 1023px) {
+            #mobile-menu-toggle {
+                display: flex !important;
+            }
+            .desktop-nav {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body class="font-sans antialiased text-gray-800 bg-gray-50 flex flex-col min-h-screen">
@@ -74,7 +144,7 @@
                 </a>
 
                 <!-- Desktop Menu (Screen width >= 1024px) -->
-                <nav class="hidden lg:flex gap-1 xl:gap-2 items-center font-medium text-xs xl:text-sm text-gray-600 mx-auto">
+                <nav class="desktop-nav gap-1 xl:gap-2 items-center font-medium text-xs xl:text-sm text-gray-600 mx-auto">
                     <a href="{{ route('home') }}" class="px-3 xl:px-4 py-2.5 rounded-full transition-all duration-300 {{ request()->routeIs('home') ? 'bg-blue-50 text-blue-700 font-bold shadow-sm' : 'hover:bg-gray-50 hover:text-blue-600' }}">Beranda</a>
                     <a href="{{ route('frontend.berita') }}" class="px-3 xl:px-4 py-2.5 rounded-full transition-all duration-300 {{ request()->routeIs('frontend.berita*') ? 'bg-blue-50 text-blue-700 font-bold shadow-sm' : 'hover:bg-gray-50 hover:text-blue-600' }}">Berita</a>
                     
@@ -111,7 +181,7 @@
                 </nav>
 
                 <!-- Mobile & Tablet Hamburger Button (Visible on screen width < 1024px) -->
-                <button id="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu-panel" aria-label="Buka Menu Navigasi" class="lg:hidden p-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all flex items-center justify-center">
+                <button id="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu-panel" aria-label="Buka Menu Navigasi" class="p-2.5 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all items-center justify-center">
                     <i class="fa-solid fa-bars text-2xl"></i>
                 </button>
             </div>
@@ -119,10 +189,10 @@
     </header>
 
     <!-- Mobile & Tablet Off-Canvas Drawer Backdrop -->
-    <div id="mobile-menu-backdrop" class="fixed inset-0 bg-gray-950/60 backdrop-blur-sm z-[99] transition-opacity duration-300 opacity-0 pointer-events-none" aria-hidden="true"></div>
+    <div id="mobile-menu-backdrop" aria-hidden="true"></div>
 
     <!-- Mobile & Tablet Off-Canvas Drawer Panel -->
-    <div id="mobile-menu-panel" class="fixed top-0 right-0 bottom-0 w-[85%] max-w-[380px] bg-white shadow-2xl z-[100] flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out">
+    <div id="mobile-menu-panel">
         <!-- Drawer Header -->
         <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-blue-50/70 to-white">
             <a href="{{ route('home') }}" class="flex items-center gap-3 min-w-0 pr-2">
@@ -369,15 +439,15 @@
             if (!toggleBtn || !panel || !backdrop) return;
 
             function openMobileMenu() {
-                panel.classList.remove('translate-x-full');
-                backdrop.classList.remove('opacity-0', 'pointer-events-none');
+                panel.classList.add('active');
+                backdrop.classList.add('active');
                 document.body.classList.add('overflow-hidden');
                 toggleBtn.setAttribute('aria-expanded', 'true');
             }
 
             function closeMobileMenu() {
-                panel.classList.add('translate-x-full');
-                backdrop.classList.add('opacity-0', 'pointer-events-none');
+                panel.classList.remove('active');
+                backdrop.classList.remove('active');
                 document.body.classList.remove('overflow-hidden');
                 toggleBtn.setAttribute('aria-expanded', 'false');
             }
@@ -400,14 +470,14 @@
 
             // Close on Escape key press
             document.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape' && !panel.classList.contains('translate-x-full')) {
+                if (e.key === 'Escape' && panel.classList.contains('active')) {
                     closeMobileMenu();
                 }
             });
 
             // Auto-close on resize to desktop (>= 1024px)
             window.addEventListener('resize', function () {
-                if (window.innerWidth >= 1024 && !panel.classList.contains('translate-x-full')) {
+                if (window.innerWidth >= 1024 && panel.classList.contains('active')) {
                     closeMobileMenu();
                 }
             });
@@ -420,7 +490,7 @@
                     const submenu = this.nextElementSibling;
                     const chevron = this.querySelector('.fa-chevron-down');
                     if (submenu) {
-                        submenu.classList.toggle('hidden');
+                        submenu.classList.toggle('open');
                         if (chevron) {
                             chevron.classList.toggle('rotate-180');
                         }

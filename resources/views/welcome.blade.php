@@ -6,7 +6,7 @@
     <!-- Hero Slider Section -->
     <section class="relative min-h-[580px] sm:min-h-[640px] lg:h-[700px] bg-gray-900 overflow-hidden flex items-center">
         @if(isset($pengaturan->slider_hero) && is_array($pengaturan->slider_hero) && count($pengaturan->slider_hero) > 0)
-            <div id="hero-slider" class="w-full h-full relative absolute inset-0">
+            <div id="hero-slider" class="absolute inset-0 w-full h-full">
                 @foreach($pengaturan->slider_hero as $index => $slider)
                     <div class="absolute inset-0 transition-opacity duration-1000 slider-slide {{ $index == 0 ? 'opacity-100' : 'opacity-0' }}">
                         <img src="{{ storage_upload_url($slider) }}" alt="Slider {{ $index+1 }}" class="w-full h-full object-cover">
@@ -19,7 +19,7 @@
             </div>
         @else
             <!-- Default Fallback Slider with 3 Images -->
-            <div id="hero-slider" class="w-full h-full relative absolute inset-0">
+            <div id="hero-slider" class="absolute inset-0 w-full h-full">
                 @php
                     $defaultImages = [
                         "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=2000&auto=format&fit=crop", // Majestic campus building
