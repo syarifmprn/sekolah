@@ -26,15 +26,38 @@
                             @else
                                 <i class="fa-solid fa-trophy text-5xl text-gray-300"></i>
                             @endif
-                            <div class="absolute top-3 left-3 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                                <i class="fa-solid fa-medal mr-1"></i> {{ $item->tipe ?? 'Prestasi' }}
+                            @php
+                                $badgePrestasi = 'Juara';
+                                if (!empty($item->hasil)) {
+                                    $badgePrestasi = is_numeric($item->hasil) ? 'Juara ' . $item->hasil : $item->hasil;
+                                }
+                            @endphp
+                            <div class="absolute top-3 left-3 bg-yellow-400 text-yellow-950 text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1.5 uppercase tracking-wider">
+                                <i class="fa-solid fa-medal"></i> {{ $badgePrestasi }}
                             </div>
                         </div>
-                        <div class="p-5">
-                            <h4 class="text-lg font-bold text-gray-900 mb-2 leading-snug">{{ $item->nama_kegiatan }}</h4>
-                            <div class="prose prose-sm text-gray-500 line-clamp-3">
-                                {!! $item->hasil !!}
+                        <div class="p-5 flex flex-col justify-between flex-grow">
+                            <div>
+                                <div class="flex items-center gap-2 mb-2 text-xs font-semibold text-gray-500">
+                                    @if(!empty($item->tipe))
+                                        <span class="inline-flex items-center text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full uppercase tracking-wider text-[10px]">
+                                            {{ $item->tipe }}
+                                        </span>
+                                    @endif
+                                    @if(!empty($item->tahun))
+                                        <span class="text-gray-400">
+                                            <i class="fa-regular fa-calendar-alt mr-1"></i> {{ $item->tahun }}
+                                        </span>
+                                    @endif
+                                </div>
+                                <h4 class="text-lg font-bold text-gray-900 mb-2 leading-snug">{{ $item->nama_kegiatan }}</h4>
                             </div>
+                            @if(!empty($item->hasil))
+                                <div class="text-xs font-bold text-blue-900 bg-blue-50/80 p-2.5 rounded-xl border border-blue-100/60 mt-3 flex items-center gap-2">
+                                    <i class="fa-solid fa-award text-yellow-600"></i>
+                                    <span>Pencapaian: {{ is_numeric($item->hasil) ? 'Juara ' . $item->hasil : $item->hasil }}</span>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @empty

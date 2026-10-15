@@ -21,7 +21,7 @@
                 <div class="relative z-10 flex flex-col md:flex-row md:items-center gap-6 justify-between">
                     <div class="flex items-center gap-5">
                         @if($ekskul->logo)
-                            <img src="{{ asset('storage/' . $ekskul->logo) }}" alt="{{ $ekskul->nama }}" 
+                            <img src="{{ storage_upload_url($ekskul->logo) }}" alt="{{ $ekskul->nama }}" 
                                 class="w-24 h-24 rounded-2xl object-cover bg-white p-1 border-2 border-white/20 shadow-lg">
                         @else
                             <div class="w-24 h-24 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-4xl text-white shadow-lg">
@@ -81,9 +81,9 @@
                         @if(is_array($ekskul->galeri) && count($ekskul->galeri) > 0)
                             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
                                 @foreach($ekskul->galeri as $photo)
-                                    <div onclick="previewPhoto('{{ asset('storage/' . $photo) }}')" 
+                                    <div onclick="previewPhoto('{{ storage_upload_url($photo) }}')" 
                                         class="aspect-video rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 cursor-pointer group shadow-2xs hover:shadow-md transition-all relative">
-                                        <img src="{{ asset('storage/' . $photo) }}" alt="Foto {{ $ekskul->nama }}" 
+                                        <img src="{{ storage_upload_url($photo) }}" alt="Foto {{ $ekskul->nama }}" 
                                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                         <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
                                             <i class="fa-solid fa-magnifying-glass-plus text-lg"></i>
@@ -168,7 +168,7 @@
                                     <a href="{{ route('frontend.ekstrakurikuler.show', $other->id) }}" 
                                         class="flex items-center gap-3 p-2 rounded-2xl hover:bg-gray-50 transition-colors group">
                                         @if($other->logo)
-                                            <img src="{{ asset('storage/' . $other->logo) }}" alt="{{ $other->nama }}" 
+                                            <img src="{{ storage_upload_url($other->logo) }}" alt="{{ $other->nama }}" 
                                                 class="w-12 h-12 rounded-xl object-cover border border-gray-100 flex-shrink-0">
                                         @else
                                             <div class="w-12 h-12 rounded-xl bg-blue-50 text-[#056ded] flex items-center justify-center text-base font-bold flex-shrink-0">

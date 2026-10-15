@@ -4,9 +4,9 @@
 @section('content')
 
     <!-- Hero Slider Section -->
-    <section class="relative h-[600px] lg:h-[700px] bg-gray-900 overflow-hidden">
+    <section class="relative min-h-[580px] sm:min-h-[640px] lg:h-[700px] bg-gray-900 overflow-hidden flex items-center">
         @if(isset($pengaturan->slider_hero) && is_array($pengaturan->slider_hero) && count($pengaturan->slider_hero) > 0)
-            <div id="hero-slider" class="w-full h-full relative">
+            <div id="hero-slider" class="w-full h-full relative absolute inset-0">
                 @foreach($pengaturan->slider_hero as $index => $slider)
                     <div class="absolute inset-0 transition-opacity duration-1000 slider-slide {{ $index == 0 ? 'opacity-100' : 'opacity-0' }}">
                         <img src="{{ storage_upload_url($slider) }}" alt="Slider {{ $index+1 }}" class="w-full h-full object-cover">
@@ -19,7 +19,7 @@
             </div>
         @else
             <!-- Default Fallback Slider with 3 Images -->
-            <div id="hero-slider" class="w-full h-full relative">
+            <div id="hero-slider" class="w-full h-full relative absolute inset-0">
                 @php
                     $defaultImages = [
                         "https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=2000&auto=format&fit=crop", // Majestic campus building
@@ -40,30 +40,30 @@
         @endif
 
         <!-- Hero Content -->
-        <div class="absolute inset-0 flex flex-col justify-center text-left z-10 pb-12">
+        <div class="relative z-10 w-full py-16 sm:py-20 lg:py-24 text-left">
             <div class="container mx-auto px-4 lg:px-8 max-w-7xl">
                 <div class="max-w-3xl transform transition-all duration-700 translate-y-0 opacity-100">
                     <!-- Decorative Badge -->
-                    <div class="mb-8 inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 border border-yellow-400 shadow-[0_0_20px_rgba(234,179,8,0.4)] hover:shadow-[0_0_25px_rgba(234,179,8,0.6)] transition-all cursor-default">
+                    <div class="mb-5 sm:mb-8 inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 border border-yellow-400 shadow-[0_0_20px_rgba(234,179,8,0.4)] hover:shadow-[0_0_25px_rgba(234,179,8,0.6)] transition-all cursor-default">
                         <div class="bg-white/20 p-1 rounded-full shadow-inner">
                             <i class="fa-solid fa-star text-white text-[10px] block"></i>
                         </div>
-                        <span class="text-xs font-bold text-white tracking-widest uppercase">Akreditasi {{ optional($pengaturan)->akreditasi ?? 'A (Unggul)' }}</span>
+                        <span class="text-[11px] sm:text-xs font-bold text-white tracking-widest uppercase">Akreditasi {{ optional($pengaturan)->akreditasi ?? 'A (Unggul)' }}</span>
                     </div>
                     
                     <!-- Title (Modern & Dynamic) -->
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-[1.1] tracking-tight drop-shadow-xl">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6 leading-[1.15] tracking-tight drop-shadow-xl">
                         Selamat Datang di <br>
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 filter drop-shadow-lg">{{ optional($pengaturan)->nama_sekolah ?? 'Sekolah Unggulan' }}</span>
                     </h1>
                     
-                    <p class="text-lg md:text-xl text-blue-50/90 max-w-2xl mb-10 font-medium leading-relaxed drop-shadow-md">
+                    <p class="text-sm sm:text-base md:text-lg lg:text-xl text-blue-50/90 max-w-2xl mb-8 sm:mb-10 font-medium leading-relaxed drop-shadow-md">
                         Mencetak generasi cerdas, berkarakter, dan berdaya saing global melalui pendidikan berkualitas berbasis keunggulan teknologi dan akhlak mulia.
                     </p>
                     
                     <!-- Button (Modern Outline Transparent) -->
                     <div class="flex flex-wrap gap-4">
-                        <a href="#tentang" class="group inline-flex items-center gap-3 bg-transparent border-2 border-white/70 hover:border-white hover:bg-white/10 text-white font-bold py-3.5 px-8 rounded-full backdrop-blur-sm transition-all duration-300 transform hover:-translate-y-1">
+                        <a href="#tentang" class="group inline-flex items-center gap-3 bg-transparent border-2 border-white/70 hover:border-white hover:bg-white/10 text-white font-bold py-3 sm:py-3.5 px-6 sm:px-8 text-sm sm:text-base rounded-full backdrop-blur-sm transition-all duration-300 transform hover:-translate-y-1">
                             <span>Jelajahi Lebih Lanjut</span>
                             <i class="fa-solid fa-arrow-down text-sm transition-transform group-hover:translate-y-1"></i>
                         </a>
@@ -79,16 +79,16 @@
     </section>
 
     <!-- Sambutan Kepala Sekolah -->
-    <section id="tentang" class="py-16 md:py-20 bg-white relative">
+    <section id="tentang" class="py-12 md:py-20 bg-white relative">
         <!-- Decorative Background Element -->
         <div class="absolute top-0 left-0 w-full h-1/2 bg-blue-50/30"></div>
         
         <div class="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10">
-            <div class="bg-gradient-to-br from-[#056ded] via-blue-700 to-blue-900 rounded-[2.5rem] shadow-2xl overflow-hidden border border-blue-600/50 p-6 md:p-10 lg:p-12 relative">
+            <div class="bg-gradient-to-br from-[#056ded] via-blue-700 to-blue-900 rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden border border-blue-600/50 p-6 sm:p-8 md:p-10 lg:p-12 relative">
                 
                 <!-- Abstract Decorative Shapes inside Card -->
-                <div class="absolute top-0 right-0 -mt-16 -mr-16 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-                <div class="absolute bottom-0 left-0 -mb-16 -ml-16 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+                <div class="absolute top-0 right-0 -mt-16 -mr-16 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 -mb-16 -ml-16 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000 pointer-events-none"></div>
 
                 <div class="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center relative z-10">
                     <!-- Photo with Frame -->
@@ -100,9 +100,9 @@
                             <!-- Sleek Photo Container -->
                             <div class="relative bg-white/10 backdrop-blur-sm p-1.5 rounded-3xl border border-white/20 shadow-2xl transform transition-transform duration-500 group-hover:-translate-y-1">
                                 @if(isset($pengaturan->foto_kepala_sekolah) && $pengaturan->foto_kepala_sekolah)
-                                    <img src="{{ storage_upload_url($pengaturan->foto_kepala_sekolah) }}" alt="Kepala Sekolah" class="w-56 h-64 lg:w-64 lg:h-80 object-cover rounded-2xl shadow-inner">
+                                    <img src="{{ storage_upload_url($pengaturan->foto_kepala_sekolah) }}" alt="Kepala Sekolah" class="w-48 h-56 sm:w-56 sm:h-64 lg:w-64 lg:h-80 object-cover rounded-2xl shadow-inner">
                                 @else
-                                    <img src="https://ui-avatars.com/api/?name=Kepala+Sekolah&background=1c3faa&color=fff&size=512" alt="Kepala Sekolah" class="w-56 h-64 lg:w-64 lg:h-80 object-cover rounded-2xl shadow-inner">
+                                    <img src="https://ui-avatars.com/api/?name=Kepala+Sekolah&background=1c3faa&color=fff&size=512" alt="Kepala Sekolah" class="w-48 h-56 sm:w-56 sm:h-64 lg:w-64 lg:h-80 object-cover rounded-2xl shadow-inner">
                                 @endif
                             </div>
                         </div>
@@ -114,14 +114,14 @@
                             <span class="text-xs font-bold tracking-widest uppercase text-yellow-300">Pesan Inspiratif</span>
                         </div>
                         
-                        <h3 class="text-3xl md:text-4xl font-extrabold mb-5 leading-tight">
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4 sm:mb-5 leading-tight">
                             Sambutan <br>
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-100">Kepala Sekolah</span>
                         </h3>
                         
                         <div class="relative">
-                            <i class="fa-solid fa-quote-left absolute -top-4 -left-6 text-4xl text-blue-400/20"></i>
-                            <div class="prose prose-md prose-invert text-blue-50 leading-relaxed text-justify mb-6 relative z-10 font-medium line-clamp-6">
+                            <i class="fa-solid fa-quote-left absolute -top-4 -left-3 sm:-left-6 text-3xl sm:text-4xl text-blue-400/20"></i>
+                            <div class="prose prose-sm sm:prose-md prose-invert text-blue-50 leading-relaxed text-left sm:text-justify mb-6 relative z-10 font-medium line-clamp-6">
                                 <p>
                                     {{ optional($pengaturan)->sambutan_kepala_sekolah ?? 'Selamat datang di website resmi kami. Sebagai institusi pendidikan terdepan, kami berkomitmen penuh untuk memfasilitasi setiap siswa-siswi agar dapat mengembangkan potensi terbaiknya. Di tengah era digital ini, kami terus berinovasi dalam mengintegrasikan teknologi ke dalam sistem pembelajaran, guna menciptakan lingkungan yang kondusif, aman, dan memotivasi.' }}
                                 </p>
@@ -129,12 +129,12 @@
                         </div>
                         
                         <div class="flex items-center gap-4 mt-6 border-t border-white/10 pt-6">
-                            <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-xl text-yellow-400 border border-white/20">
+                            <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-xl text-yellow-400 border border-white/20 flex-shrink-0">
                                 <i class="fa-solid fa-pen-nib"></i>
                             </div>
-                            <div>
-                                <h4 class="font-bold text-lg text-white">{{ optional($pengaturan)->nama_kepala_sekolah ?? 'Bapak/Ibu Kepala Sekolah' }}</h4>
-                                <span class="text-blue-200 text-xs font-semibold tracking-wider">Kepala Sekolah {{ optional($pengaturan)->nama_sekolah ?? 'Sekolah Unggulan' }}</span>
+                            <div class="min-w-0">
+                                <h4 class="font-bold text-base sm:text-lg text-white truncate">{{ optional($pengaturan)->nama_kepala_sekolah ?? 'Bapak/Ibu Kepala Sekolah' }}</h4>
+                                <span class="text-blue-200 text-xs font-semibold tracking-wider block truncate">Kepala Sekolah {{ optional($pengaturan)->nama_sekolah ?? 'Sekolah Unggulan' }}</span>
                             </div>
                         </div>
                     </div>
@@ -144,7 +144,7 @@
     </section>
 
     <!-- Statistik Card (Glassmorphism) -->
-    <section class="relative z-20 -mt-10 mb-20 px-4">
+    <section class="relative z-20 -mt-10 mb-16 sm:mb-20 px-4">
         <div class="container mx-auto max-w-7xl relative">
             
             <!-- Decorative Blurred Orbs Behind Cards -->
@@ -154,47 +154,47 @@
                 <div class="w-64 h-64 bg-yellow-300 rounded-full mix-blend-multiply filter blur-[80px] opacity-30 animate-blob animation-delay-4000 hidden md:block"></div>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
                 @forelse($statistik as $stat)
-                    <div class="bg-white/60 backdrop-blur-xl rounded-3xl p-6 md:p-8 text-center shadow-[0_8px_32px_rgba(31,38,135,0.07)] border border-white/80 group transform transition-all duration-500 hover:-translate-y-3 hover:bg-white/90 hover:shadow-[0_15px_40px_rgba(31,38,135,0.12)]">
-                        <div class="w-16 h-16 mx-auto bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-[1.25rem] shadow-lg flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
-                            <i class="{{ $stat->icon }} text-2xl text-white"></i>
+                    <div class="bg-white/60 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 text-center shadow-[0_8px_32px_rgba(31,38,135,0.07)] border border-white/80 group transform transition-all duration-500 hover:-translate-y-2 hover:bg-white/90 hover:shadow-[0_15px_40px_rgba(31,38,135,0.12)]">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-xl sm:rounded-[1.25rem] shadow-lg flex items-center justify-center mb-3 sm:mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                            <i class="{{ $stat->icon }} text-xl sm:text-2xl text-white"></i>
                         </div>
-                        <h4 class="text-4xl font-black text-blue-950 mb-1 drop-shadow-sm">{{ $stat->value }}</h4>
-                        <p class="text-blue-900/70 font-bold text-xs md:text-sm uppercase tracking-wider">{{ $stat->nama }}</p>
+                        <h4 class="text-2xl sm:text-3xl md:text-4xl font-black text-blue-950 mb-1 drop-shadow-sm">{{ $stat->value }}</h4>
+                        <p class="text-blue-900/70 font-bold text-[10px] sm:text-xs md:text-sm uppercase tracking-wider">{{ $stat->nama }}</p>
                     </div>
                 @empty
                     <!-- Default Stats -->
-                    <div class="bg-white/60 backdrop-blur-xl rounded-3xl p-6 md:p-8 text-center shadow-[0_8px_32px_rgba(31,38,135,0.07)] border border-white/80 group transform transition-all duration-500 hover:-translate-y-3 hover:bg-white/90 hover:shadow-[0_15px_40px_rgba(31,38,135,0.12)]">
-                        <div class="w-16 h-16 mx-auto bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-[1.25rem] shadow-lg flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
-                            <i class="fa-solid fa-user-graduate text-2xl text-white"></i>
+                    <div class="bg-white/60 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 text-center shadow-[0_8px_32px_rgba(31,38,135,0.07)] border border-white/80 group transform transition-all duration-500 hover:-translate-y-2 hover:bg-white/90 hover:shadow-[0_15px_40px_rgba(31,38,135,0.12)]">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-xl sm:rounded-[1.25rem] shadow-lg flex items-center justify-center mb-3 sm:mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                            <i class="fa-solid fa-user-graduate text-xl sm:text-2xl text-white"></i>
                         </div>
-                        <h4 class="text-4xl font-black text-blue-950 mb-1 drop-shadow-sm">1,250</h4>
-                        <p class="text-blue-900/70 font-bold text-xs md:text-sm uppercase tracking-wider">Siswa Aktif</p>
+                        <h4 class="text-2xl sm:text-3xl md:text-4xl font-black text-blue-950 mb-1 drop-shadow-sm">1,250</h4>
+                        <p class="text-blue-900/70 font-bold text-[10px] sm:text-xs md:text-sm uppercase tracking-wider">Siswa Aktif</p>
                     </div>
                     
-                    <div class="bg-white/60 backdrop-blur-xl rounded-3xl p-6 md:p-8 text-center shadow-[0_8px_32px_rgba(31,38,135,0.07)] border border-white/80 group transform transition-all duration-500 hover:-translate-y-3 hover:bg-white/90 hover:shadow-[0_15px_40px_rgba(31,38,135,0.12)]">
-                        <div class="w-16 h-16 mx-auto bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-[1.25rem] shadow-lg flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
-                            <i class="fa-solid fa-chalkboard-user text-2xl text-white"></i>
+                    <div class="bg-white/60 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 text-center shadow-[0_8px_32px_rgba(31,38,135,0.07)] border border-white/80 group transform transition-all duration-500 hover:-translate-y-2 hover:bg-white/90 hover:shadow-[0_15px_40px_rgba(31,38,135,0.12)]">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-xl sm:rounded-[1.25rem] shadow-lg flex items-center justify-center mb-3 sm:mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                            <i class="fa-solid fa-chalkboard-user text-xl sm:text-2xl text-white"></i>
                         </div>
-                        <h4 class="text-4xl font-black text-blue-950 mb-1 drop-shadow-sm">85</h4>
-                        <p class="text-blue-900/70 font-bold text-xs md:text-sm uppercase tracking-wider">Guru Pengajar</p>
+                        <h4 class="text-2xl sm:text-3xl md:text-4xl font-black text-blue-950 mb-1 drop-shadow-sm">85</h4>
+                        <p class="text-blue-900/70 font-bold text-[10px] sm:text-xs md:text-sm uppercase tracking-wider">Guru Pengajar</p>
                     </div>
                     
-                    <div class="bg-white/60 backdrop-blur-xl rounded-3xl p-6 md:p-8 text-center shadow-[0_8px_32px_rgba(31,38,135,0.07)] border border-white/80 group transform transition-all duration-500 hover:-translate-y-3 hover:bg-white/90 hover:shadow-[0_15px_40px_rgba(31,38,135,0.12)]">
-                        <div class="w-16 h-16 mx-auto bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-[1.25rem] shadow-lg flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
-                            <i class="fa-solid fa-school text-2xl text-white"></i>
+                    <div class="bg-white/60 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 text-center shadow-[0_8px_32px_rgba(31,38,135,0.07)] border border-white/80 group transform transition-all duration-500 hover:-translate-y-2 hover:bg-white/90 hover:shadow-[0_15px_40px_rgba(31,38,135,0.12)]">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-xl sm:rounded-[1.25rem] shadow-lg flex items-center justify-center mb-3 sm:mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                            <i class="fa-solid fa-school text-xl sm:text-2xl text-white"></i>
                         </div>
-                        <h4 class="text-4xl font-black text-blue-950 mb-1 drop-shadow-sm">32</h4>
-                        <p class="text-blue-900/70 font-bold text-xs md:text-sm uppercase tracking-wider">Ruang Kelas</p>
+                        <h4 class="text-2xl sm:text-3xl md:text-4xl font-black text-blue-950 mb-1 drop-shadow-sm">32</h4>
+                        <p class="text-blue-900/70 font-bold text-[10px] sm:text-xs md:text-sm uppercase tracking-wider">Ruang Kelas</p>
                     </div>
                     
-                    <div class="bg-white/60 backdrop-blur-xl rounded-3xl p-6 md:p-8 text-center shadow-[0_8px_32px_rgba(31,38,135,0.07)] border border-white/80 group transform transition-all duration-500 hover:-translate-y-3 hover:bg-white/90 hover:shadow-[0_15px_40px_rgba(31,38,135,0.12)]">
-                        <div class="w-16 h-16 mx-auto bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-[1.25rem] shadow-lg flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
-                            <i class="fa-solid fa-trophy text-2xl text-white"></i>
+                    <div class="bg-white/60 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 text-center shadow-[0_8px_32px_rgba(31,38,135,0.07)] border border-white/80 group transform transition-all duration-500 hover:-translate-y-2 hover:bg-white/90 hover:shadow-[0_15px_40px_rgba(31,38,135,0.12)]">
+                        <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-xl sm:rounded-[1.25rem] shadow-lg flex items-center justify-center mb-3 sm:mb-5 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                            <i class="fa-solid fa-trophy text-xl sm:text-2xl text-white"></i>
                         </div>
-                        <h4 class="text-4xl font-black text-blue-950 mb-1 drop-shadow-sm">150+</h4>
-                        <p class="text-blue-900/70 font-bold text-xs md:text-sm uppercase tracking-wider">Prestasi Diraih</p>
+                        <h4 class="text-2xl sm:text-3xl md:text-4xl font-black text-blue-950 mb-1 drop-shadow-sm">150+</h4>
+                        <p class="text-blue-900/70 font-bold text-[10px] sm:text-xs md:text-sm uppercase tracking-wider">Prestasi Diraih</p>
                     </div>
                 @endforelse
             </div>
@@ -306,10 +306,26 @@
                         
                         <!-- Content Overlay -->
                         <div class="absolute bottom-0 left-0 w-full p-6 flex flex-col justify-end">
-                            <div class="mb-3 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                            <div class="mb-3 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500 flex items-center gap-2 flex-wrap">
+                                @php
+                                    $badgePrestasi = 'Juara';
+                                    if (!empty($item->hasil)) {
+                                        $badgePrestasi = is_numeric($item->hasil) ? 'Juara ' . $item->hasil : $item->hasil;
+                                    }
+                                @endphp
                                 <span class="inline-flex items-center gap-1.5 bg-yellow-400 text-yellow-950 text-xs font-bold px-3 py-1.5 rounded-md uppercase tracking-wider shadow-sm">
-                                    <i class="fa-solid fa-medal"></i> {{ $item->tipe ?? 'Juara Nasional' }}
+                                    <i class="fa-solid fa-medal"></i> {{ $badgePrestasi }}
                                 </span>
+                                @if(!empty($item->tipe))
+                                    <span class="inline-flex items-center text-[11px] font-semibold text-white/90 bg-white/20 backdrop-blur-md px-2.5 py-1 rounded-md uppercase tracking-wider">
+                                        {{ $item->tipe }}
+                                    </span>
+                                @endif
+                                @if(!empty($item->tahun))
+                                    <span class="inline-flex items-center text-[11px] font-medium text-white/80 bg-black/30 backdrop-blur-md px-2 py-1 rounded-md">
+                                        {{ $item->tahun }}
+                                    </span>
+                                @endif
                             </div>
                             <h4 class="text-xl md:text-2xl font-bold text-white leading-tight group-hover:text-yellow-300 transition-colors">{{ $item->nama_kegiatan }}</h4>
                         </div>
@@ -513,14 +529,14 @@
                 <!-- Gradient highlight -->
                 <div class="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800/90 to-transparent"></div>
                 
-                <div class="relative z-10 p-12 md:p-16 flex flex-col lg:flex-row items-center justify-between text-center lg:text-left gap-8">
+                <div class="relative z-10 p-6 sm:p-10 md:p-16 flex flex-col lg:flex-row items-center justify-between text-center lg:text-left gap-6 sm:gap-8">
                     <div class="max-w-2xl">
-                        <span class="bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-widest mb-5 inline-block shadow-sm">Pendaftaran Dibuka</span>
-                        <h3 class="text-3xl md:text-4xl font-extrabold text-white mb-4 leading-tight">Penerimaan Siswa Baru (SPMB)</h3>
-                        <p class="text-blue-100/90 text-lg">Bergabunglah bersama kami dan wujudkan impian Anda. Pendaftaran tahun ajaran baru telah resmi dibuka.</p>
+                        <span class="bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-widest mb-4 sm:mb-5 inline-block shadow-sm">Pendaftaran Dibuka</span>
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3 sm:mb-4 leading-tight">Penerimaan Siswa Baru (SPMB)</h3>
+                        <p class="text-blue-100/90 text-sm sm:text-base md:text-lg">Bergabunglah bersama kami dan wujudkan impian Anda. Pendaftaran tahun ajaran baru telah resmi dibuka.</p>
                     </div>
-                    <div class="flex-shrink-0">
-                        <a href="#" class="inline-flex items-center justify-center bg-yellow-400 text-yellow-950 font-bold px-8 py-4 rounded-xl shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_25px_rgba(250,204,21,0.5)] hover:bg-yellow-300 transition-all gap-2 text-lg transform hover:-translate-y-1">
+                    <div class="flex-shrink-0 w-full sm:w-auto">
+                        <a href="#" class="inline-flex items-center justify-center bg-yellow-400 text-yellow-950 font-bold px-8 py-3.5 sm:py-4 rounded-xl shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_25px_rgba(250,204,21,0.5)] hover:bg-yellow-300 transition-all gap-2 text-base sm:text-lg transform hover:-translate-y-1 w-full sm:w-auto">
                             Daftar Sekarang <i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>

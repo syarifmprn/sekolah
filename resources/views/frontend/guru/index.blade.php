@@ -50,7 +50,7 @@
 
     <!-- Modal Detail Guru -->
     <div id="guruModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-gray-900/80 backdrop-blur-sm opacity-0 invisible transition-all duration-300">
-        <div class="bg-white rounded-3xl w-11/12 max-w-3xl overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative" id="guruModalContent">
+        <div class="bg-white rounded-3xl w-11/12 max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-transform duration-300 relative" id="guruModalContent">
             
             <button onclick="closeGuruModal()" class="absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-red-500 text-gray-500 hover:text-white rounded-full flex items-center justify-center transition-colors z-20 backdrop-blur-sm shadow">
                 <i class="fa-solid fa-xmark text-xl"></i>

@@ -82,7 +82,7 @@
                         <!-- Foto Prasarana -->
                         <div class="h-48 overflow-hidden relative bg-gray-100 flex items-center justify-center">
                             @if($item->foto)
-                                <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->nama }}" 
+                                <img src="{{ storage_upload_url($item->foto) }}" alt="{{ $item->nama }}" 
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             @else
                                 <div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50/60 text-[#056ded]">

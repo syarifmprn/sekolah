@@ -62,7 +62,7 @@
                         <!-- Top Banner / Logo -->
                         <div class="h-44 overflow-hidden relative bg-gradient-to-br from-blue-50 to-indigo-50/60 p-6 flex items-center justify-center">
                             @if($item->logo)
-                                <img src="{{ asset('storage/' . $item->logo) }}" alt="{{ $item->nama }}" 
+                                <img src="{{ storage_upload_url($item->logo) }}" alt="{{ $item->nama }}" 
                                     class="w-24 h-24 object-cover rounded-2xl border-2 border-white shadow-md group-hover:scale-105 transition-transform duration-500">
                             @else
                                 <div class="w-24 h-24 rounded-2xl bg-white border border-blue-100 flex items-center justify-center text-4xl text-[#056ded] shadow-md group-hover:scale-105 transition-transform duration-500">
