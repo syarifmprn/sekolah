@@ -224,17 +224,34 @@ class FrontendController extends Controller
 
     public function storeAlumni(Request $request)
     {
-        $request->validate([
+        $rules = [
             'nama' => 'required|string|max:100',
             'tahun_lulus' => 'required|integer|digits:4|min:1970|max:' . (date('Y') + 1),
             'jurusan' => 'nullable|string|max:50',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'pekerjaan' => 'required|string|max:100',
             'instansi' => 'required|string|max:150',
             'alamat' => 'nullable|string|max:150',
             'no_hp' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:100',
             'testimoni' => 'required|string|max:2000',
+        ];
+
+        if ($request->hasFile('foto')) {
+            if (extension_loaded('fileinfo')) {
+                $rules['foto'] = 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048';
+            } else {
+                $rules['foto'] = 'nullable|file|max:2048';
+                $ext = strtolower($request->file('foto')->getClientOriginalExtension());
+                if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
+                    return back()->withInput()->withErrors(['foto' => 'Format foto harus berupa JPG, JPEG, PNG, atau WEBP.']);
+                }
+            }
+        }
+
+        $request->validate($rules, [
+            'foto.max' => 'Ukuran foto maksimal adalah 2MB (2048 KB).',
+            'foto.image' => 'File yang diunggah harus berupa gambar.',
+            'foto.mimes' => 'Format foto harus berupa JPG, JPEG, PNG, atau WEBP.',
         ]);
 
         $data = $request->except(['foto']);

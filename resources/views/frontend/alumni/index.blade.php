@@ -334,9 +334,27 @@
                             <label class="block text-xs font-bold text-gray-700 mb-2">
                                 Foto Diri <span class="text-gray-400 font-normal">(Opsional)</span>
                             </label>
-                            <input type="file" name="foto" accept="image/*" 
+                            <input type="file" id="foto_alumni" name="foto" accept="image/jpeg,image/png,image/jpg,image/webp" 
                                 class="w-full px-3 py-2 border border-gray-200 rounded-xl text-xs file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100">
-                            <p class="text-[10px] text-gray-400 mt-1">Format: JPG, PNG, WEBP. Maks 2MB.</p>
+                            <p class="text-[10px] text-gray-400 mt-1">Format: JPG, PNG, WEBP. Maksimal 2MB.</p>
+
+                            <!-- Alert Error Ukuran Lebih 2MB -->
+                            <div id="foto-error-box" class="hidden mt-2 p-2.5 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2">
+                                <i class="fa-solid fa-circle-xmark text-red-500 mt-0.5 text-xs"></i>
+                                <div class="text-[11px] text-red-600 font-medium" id="foto-error-text">
+                                    Ukuran foto melebihi batas maksimum 2MB.
+                                </div>
+                            </div>
+
+                            <!-- Preview Foto Aman -->
+                            <div id="foto-preview-box" class="hidden mt-2 flex items-center gap-3 p-2 bg-blue-50 border border-blue-100 rounded-xl">
+                                <img id="foto-preview-img" src="" alt="Preview Foto" class="w-10 h-10 object-cover rounded-lg border border-blue-200">
+                                <div class="text-[11px]">
+                                    <p id="foto-preview-name" class="font-bold text-gray-800 truncate max-w-[180px]"></p>
+                                    <p id="foto-preview-size" class="text-blue-600 font-semibold"></p>
+                                </div>
+                            </div>
+
                             @error('foto') <p class="text-red-500 text-[11px] mt-1">{{ $message }}</p> @enderror
                         </div>
 
@@ -388,4 +406,72 @@
 
         </div>
     </div>
+
+    <!-- Script Validasi Ukuran Foto Maksimal 2MB di Halaman Depan -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const fotoInput = document.getElementById('foto_alumni');
+            const errorBox = document.getElementById('foto-error-box');
+            const errorText = document.getElementById('foto-error-text');
+            const previewBox = document.getElementById('foto-preview-box');
+            const previewImg = document.getElementById('foto-preview-img');
+            const previewName = document.getElementById('foto-preview-name');
+            const previewSize = document.getElementById('foto-preview-size');
+            const maxBytes = 2 * 1024 * 1024; // 2 MB (2,097,152 bytes)
+
+            if (fotoInput) {
+                fotoInput.addEventListener('change', function () {
+                    const file = this.files[0];
+                    if (!file) {
+                        if (previewBox) previewBox.classList.add('hidden');
+                        if (errorBox) errorBox.classList.add('hidden');
+                        return;
+                    }
+
+                    // Periksa jika ukuran melebihi 2MB
+                    if (file.size > maxBytes) {
+                        const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+                        this.value = ''; // Reset input agar tidak terunggah
+
+                        if (previewBox) previewBox.classList.add('hidden');
+                        if (errorBox) {
+                            errorText.textContent = `Foto ditolak! Ukuran file Anda (${sizeMB} MB) melebihi batas maksimal 2 MB. Silakan pilih foto dengan ukuran lebih kecil.`;
+                            errorBox.classList.remove('hidden');
+                        }
+                        alert(`Perhatian: Ukuran foto Anda (${sizeMB} MB) melebihi batas maksimum 2 MB!\n\nFoto ditolak secara otomatis. Silakan gunakan foto yang telah dikompres atau berukuran di bawah 2 MB.`);
+                    } else {
+                        // Ukuran valid (< 2MB)
+                        if (errorBox) errorBox.classList.add('hidden');
+                        if (previewBox && previewImg) {
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                                previewImg.src = e.target.result;
+                                if (previewName) previewName.textContent = file.name;
+                                const formattedSize = file.size >= 1024 * 1024 
+                                    ? (file.size / (1024 * 1024)).toFixed(2) + ' MB' 
+                                    : (file.size / 1024).toFixed(1) + ' KB';
+                                if (previewSize) previewSize.textContent = `${formattedSize} (Ukuran Sesuai)`;
+                                previewBox.classList.remove('hidden');
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    }
+                });
+
+                // Validasi saat formulir di-submit
+                const form = fotoInput.closest('form');
+                if (form) {
+                    form.addEventListener('submit', function (e) {
+                        if (fotoInput.files && fotoInput.files[0] && fotoInput.files[0].size > maxBytes) {
+                            e.preventDefault();
+                            const sizeMB = (fotoInput.files[0].size / (1024 * 1024)).toFixed(2);
+                            alert(`Gagal mengirim formulir!\nUkuran foto (${sizeMB} MB) melebihi batas 2 MB. Mohon ganti foto terlebih dahulu.`);
+                            fotoInput.focus();
+                            return false;
+                        }
+                    });
+                }
+            }
+        });
+    </script>
 @endsection
