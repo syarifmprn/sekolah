@@ -22,7 +22,7 @@
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow group">
                         <div class="h-48 overflow-hidden relative bg-gray-100 flex items-center justify-center">
                             @if(isset($item->dokumentasi) && is_array($item->dokumentasi) && count($item->dokumentasi) > 0)
-                                <img src="{{ asset('storage/uploads/' . $item->dokumentasi[0]) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="{{ $item->nama_kegiatan }}">
+                                <img src="{{ storage_upload_url($item->dokumentasi[0]) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="{{ $item->nama_kegiatan }}">
                             @else
                                 <i class="fa-solid fa-trophy text-5xl text-gray-300"></i>
                             @endif

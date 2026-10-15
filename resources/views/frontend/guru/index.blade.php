@@ -19,9 +19,9 @@
         <div class="container mx-auto px-4 lg:px-8 max-w-7xl">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-12">
                 @forelse($guru as $g)
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow group cursor-pointer" onclick="openGuruModal('{{ $g->nama }}', '{{ $g->jabatan ?? 'Guru' }}', '{{ $g->nip ?? '-' }}', '{{ $g->nuptk ?? '-' }}', '{{ $g->jenis_kelamin ?? '-' }}', '{{ $g->agama ?? '-' }}', '{{ $g->alamat ?? '-' }}', '{{ $g->foto ? asset('storage/uploads/' . $g->foto) : 'https://ui-avatars.com/api/?name='.urlencode($g->nama).'&background=f3f4f6&color=1c3faa&size=512' }}', '{{ $g->facebook }}', '{{ $g->instagram }}', '{{ $g->whatsapp }}')">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow group cursor-pointer" onclick="openGuruModal('{{ $g->nama }}', '{{ $g->jabatan ?? 'Guru' }}', '{{ $g->nip ?? '-' }}', '{{ $g->nuptk ?? '-' }}', '{{ $g->jenis_kelamin ?? '-' }}', '{{ $g->agama ?? '-' }}', '{{ $g->alamat ?? '-' }}', '{{ $g->foto ? storage_upload_url($g->foto) : 'https://ui-avatars.com/api/?name='.urlencode($g->nama).'&background=f3f4f6&color=1c3faa&size=512' }}', '{{ $g->facebook }}', '{{ $g->instagram }}', '{{ $g->whatsapp }}')">
                         <div class="h-72 overflow-hidden relative">
-                            <img src="{{ $g->foto ? asset('storage/uploads/' . $g->foto) : 'https://ui-avatars.com/api/?name='.urlencode($g->nama).'&background=f3f4f6&color=1c3faa&size=512' }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="{{ $g->nama }}">
+                            <img src="{{ $g->foto ? storage_upload_url($g->foto) : 'https://ui-avatars.com/api/?name='.urlencode($g->nama).'&background=f3f4f6&color=1c3faa&size=512' }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="{{ $g->nama }}">
                             
                             <!-- Hover overlay -->
                             <div class="absolute inset-0 bg-gradient-to-br from-[#056ded] to-blue-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">

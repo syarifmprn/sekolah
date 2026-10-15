@@ -33,6 +33,32 @@ if (!function_exists('mb_strimwidth')) {
     }
 }
 
+// Helper cerdas URL file upload (menghindari double 'uploads/uploads/')
+if (!function_exists('storage_upload_url')) {
+    function storage_upload_url(?string $path): ?string
+    {
+        if (!$path) {
+            return null;
+        }
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        $cleanPath = ltrim($path, '/');
+        // Bersihkan jika ada duplikasi uploads/uploads/
+        while (str_starts_with($cleanPath, 'uploads/uploads/')) {
+            $cleanPath = substr($cleanPath, 8);
+        }
+
+        if (!str_starts_with($cleanPath, 'uploads/')) {
+            $cleanPath = 'uploads/' . $cleanPath;
+        }
+
+        return asset('storage/' . $cleanPath);
+    }
+}
+
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;

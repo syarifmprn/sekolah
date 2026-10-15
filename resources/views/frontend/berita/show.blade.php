@@ -22,7 +22,7 @@
             <div class="flex flex-col lg:flex-row gap-12">
                 <!-- Main Content -->
                 <div class="lg:w-2/3">
-                    <img src="{{ asset('storage/uploads/' . $berita->thumbnail) }}" alt="{{ $berita->judul }}" class="w-full h-auto rounded-2xl shadow-md mb-8">
+                    <img src="{{ storage_upload_url($berita->thumbnail) }}" alt="{{ $berita->judul }}" class="w-full h-auto rounded-2xl shadow-md mb-8">
                     
                     <div class="prose prose-lg prose-blue max-w-none text-gray-700 text-justify">
                         {!! $berita->isi !!}
@@ -50,7 +50,7 @@
                         <div class="space-y-6">
                             @foreach($berita_lainnya as $lain)
                                 <a href="{{ route('frontend.berita.show', $lain->id) }}" class="flex gap-4 group">
-                                    <img src="{{ asset('storage/uploads/' . $lain->thumbnail) }}" class="w-20 h-20 object-cover rounded-lg shadow-sm" alt="{{ $lain->judul }}">
+                                    <img src="{{ storage_upload_url($lain->thumbnail) }}" class="w-20 h-20 object-cover rounded-lg shadow-sm" alt="{{ $lain->judul }}">
                                     <div>
                                         <h4 class="font-bold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-2 text-sm leading-snug mb-1">{{ $lain->judul }}</h4>
                                         <p class="text-xs text-gray-500"><i class="fa-regular fa-clock mr-1"></i> {{ $lain->tanggal ? \Carbon\Carbon::parse($lain->tanggal)->format('d M Y') : $lain->created_at->format('d M Y') }}</p>

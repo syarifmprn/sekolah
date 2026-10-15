@@ -18,16 +18,8 @@ class Guru extends Model
         'aktif' => 'boolean',
     ];
 
-    public function getFotoUrlAttribute()
+    public function getFotoUrlAttribute(): ?string
     {
-        if (!$this->foto) {
-            return null;
-        }
-
-        if (str_starts_with($this->foto, 'http://') || str_starts_with($this->foto, 'https://')) {
-            return $this->foto;
-        }
-
-        return asset('storage/' . $this->foto);
+        return storage_upload_url($this->foto);
     }
 }

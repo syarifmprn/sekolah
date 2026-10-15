@@ -50,7 +50,7 @@
                                 <div class="mt-1 flex items-center gap-6">
                                     <div id="logo-preview-container" class="shrink-0 relative group {{ $pengaturan->logo ? '' : 'hidden' }}">
                                         <img id="logo-preview" 
-                                             src="{{ $pengaturan->logo ? asset('storage/uploads/' . $pengaturan->logo) : '' }}" 
+                                             src="{{ $pengaturan->logo ? storage_upload_url($pengaturan->logo) : '' }}" 
                                              alt="Preview Logo" 
                                              class="h-24 w-24 object-contain rounded-lg border border-gray-200 bg-gray-50">
                                         <button type="button" onclick="removeImage('logo')" class="absolute top-1 right-1 bg-white text-red-600 hover:text-red-700 hover:bg-red-50 rounded p-1.5 shadow-md border border-red-100 focus:outline-none transition-all" title="Hapus Gambar">
@@ -77,7 +77,7 @@
                                 <div class="mt-1 flex items-center gap-6">
                                     <div id="foto_kepala_sekolah-preview-container" class="shrink-0 relative group {{ $pengaturan->foto_kepala_sekolah ? '' : 'hidden' }}">
                                         <img id="foto_kepala_sekolah-preview" 
-                                             src="{{ $pengaturan->foto_kepala_sekolah ? asset('storage/uploads/' . $pengaturan->foto_kepala_sekolah) : '' }}" 
+                                             src="{{ $pengaturan->foto_kepala_sekolah ? storage_upload_url($pengaturan->foto_kepala_sekolah) : '' }}" 
                                              alt="Preview Foto Kepala Sekolah" 
                                              class="h-32 w-24 object-cover rounded-lg border border-gray-200 bg-gray-50">
                                         <button type="button" onclick="removeImage('foto_kepala_sekolah')" class="absolute top-1 right-1 bg-white text-red-600 hover:text-red-700 hover:bg-red-50 rounded p-1.5 shadow-md border border-red-100 focus:outline-none transition-all" title="Hapus Gambar">
@@ -122,7 +122,7 @@
                                                     <td class="px-4 py-3 text-center">
                                                         <div id="slider_hero_{{ $i }}-preview-container" class="relative group {{ $sliderExists ? '' : 'hidden' }}">
                                                             <img id="slider_hero_{{ $i }}-preview" 
-                                                                 src="{{ $sliderExists ? asset('storage/uploads/' . $sliderPath) : '' }}" 
+                                                                 src="{{ $sliderExists ? storage_upload_url($sliderPath) : '' }}" 
                                                                  class="h-16 w-24 object-cover rounded-md border border-gray-200 bg-gray-50 mx-auto">
                                                         </div>
                                                         <div id="slider_hero_{{ $i }}-empty" class="{{ $sliderExists ? 'hidden' : '' }} flex items-center justify-center h-16 w-24 border border-dashed border-gray-300 rounded-md bg-gray-50 mx-auto text-gray-400">

@@ -9,7 +9,7 @@
             <div id="hero-slider" class="w-full h-full relative">
                 @foreach($pengaturan->slider_hero as $index => $slider)
                     <div class="absolute inset-0 transition-opacity duration-1000 slider-slide {{ $index == 0 ? 'opacity-100' : 'opacity-0' }}">
-                        <img src="{{ asset('storage/uploads/' . $slider) }}" alt="Slider {{ $index+1 }}" class="w-full h-full object-cover">
+                        <img src="{{ storage_upload_url($slider) }}" alt="Slider {{ $index+1 }}" class="w-full h-full object-cover">
                         <!-- Modern Gradient Overlay -->
                         <div class="absolute inset-0 bg-gradient-to-br from-[#056ded]/70 via-blue-800/65 to-blue-950/80" style="background: linear-gradient(135deg, rgba(5, 109, 237, 0.7) 0%, rgba(30, 64, 175, 0.65) 50%, rgba(23, 37, 84, 0.8) 100%);"></div>
                         <!-- Texture/Noise overlay (optional) -->
@@ -100,7 +100,7 @@
                             <!-- Sleek Photo Container -->
                             <div class="relative bg-white/10 backdrop-blur-sm p-1.5 rounded-3xl border border-white/20 shadow-2xl transform transition-transform duration-500 group-hover:-translate-y-1">
                                 @if(isset($pengaturan->foto_kepala_sekolah) && $pengaturan->foto_kepala_sekolah)
-                                    <img src="{{ asset('storage/uploads/' . $pengaturan->foto_kepala_sekolah) }}" alt="Kepala Sekolah" class="w-56 h-64 lg:w-64 lg:h-80 object-cover rounded-2xl shadow-inner">
+                                    <img src="{{ storage_upload_url($pengaturan->foto_kepala_sekolah) }}" alt="Kepala Sekolah" class="w-56 h-64 lg:w-64 lg:h-80 object-cover rounded-2xl shadow-inner">
                                 @else
                                     <img src="https://ui-avatars.com/api/?name=Kepala+Sekolah&background=1c3faa&color=fff&size=512" alt="Kepala Sekolah" class="w-56 h-64 lg:w-64 lg:h-80 object-cover rounded-2xl shadow-inner">
                                 @endif
@@ -225,7 +225,7 @@
                 @forelse($guru as $g)
                     <div class="relative rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 group h-[22rem]">
                         <!-- Image -->
-                        <img src="{{ $g->foto ? asset('storage/uploads/' . $g->foto) : 'https://randomuser.me/api/portraits/men/' . ($loop->index % 90 + 1) . '.jpg' }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="{{ $g->nama }}">
+                        <img src="{{ $g->foto ? storage_upload_url($g->foto) : 'https://randomuser.me/api/portraits/men/' . ($loop->index % 90 + 1) . '.jpg' }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="{{ $g->nama }}">
                         
                         <!-- Gradient Overlay -->
                         <div class="absolute inset-0 bg-gradient-to-t from-blue-950 via-blue-900/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500"></div>
@@ -296,7 +296,7 @@
                     <div class="relative rounded-[1.5rem] overflow-hidden group h-56 md:h-64 shadow-xl hover:shadow-2xl transition-all duration-500">
                         <!-- Image -->
                         @if(isset($item->dokumentasi) && is_array($item->dokumentasi) && count($item->dokumentasi) > 0)
-                            <img src="{{ asset('storage/uploads/' . $item->dokumentasi[0]) }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="{{ $item->nama_kegiatan }}">
+                            <img src="{{ storage_upload_url($item->dokumentasi[0]) }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="{{ $item->nama_kegiatan }}">
                         @else
                             <img src="https://picsum.photos/seed/prestasi{{ $item->id }}/800/600" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Prestasi">
                         @endif
@@ -376,7 +376,7 @@
                     <div class="h-full">
                         <article class="relative rounded-[1.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group h-[400px] lg:h-full w-full min-h-[400px]">
                             <!-- Image -->
-                            <img src="{{ $mainBerita->thumbnail ? asset('storage/uploads/' . $mainBerita->thumbnail) : 'https://picsum.photos/seed/news_main/800/600' }}" alt="{{ $mainBerita->judul }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <img src="{{ $mainBerita->thumbnail ? storage_upload_url($mainBerita->thumbnail) : 'https://picsum.photos/seed/news_main/800/600' }}" alt="{{ $mainBerita->judul }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                             
                             <!-- Overlay -->
                             <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-900/60 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -416,7 +416,7 @@
                                 
                                 <!-- Thumbnail -->
                                 <div class="w-24 h-24 md:w-32 md:h-32 flex-shrink-0 rounded-[1rem] overflow-hidden relative shadow-sm">
-                                    <img src="{{ $item->thumbnail ? asset('storage/uploads/' . $item->thumbnail) : 'https://picsum.photos/seed/news_'.$item->id.'/800/600' }}" alt="{{ $item->judul }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                    <img src="{{ $item->thumbnail ? storage_upload_url($item->thumbnail) : 'https://picsum.photos/seed/news_'.$item->id.'/800/600' }}" alt="{{ $item->judul }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                 </div>
                                 
                                 <!-- Text Content -->

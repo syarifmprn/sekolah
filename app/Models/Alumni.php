@@ -45,14 +45,6 @@ class Alumni extends Model
      */
     public function getFotoUrlAttribute(): ?string
     {
-        if (!$this->foto) {
-            return null;
-        }
-
-        if (str_starts_with($this->foto, 'http://') || str_starts_with($this->foto, 'https://')) {
-            return $this->foto;
-        }
-
-        return asset('storage/' . ltrim($this->foto, '/'));
+        return storage_upload_url($this->foto);
     }
 }

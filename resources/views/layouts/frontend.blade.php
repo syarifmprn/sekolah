@@ -7,7 +7,7 @@
 
     <!-- Favicon -->
     @if(isset($pengaturan) && $pengaturan->logo)
-        <link rel="icon" type="image/png" href="{{ asset('storage/uploads/' . $pengaturan->logo) }}">
+        <link rel="icon" type="image/png" href="{{ storage_upload_url($pengaturan->logo) }}">
     @else
         <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23056ded' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9'/%3E%3C/svg%3E">
     @endif
@@ -61,7 +61,7 @@
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="flex items-center gap-3">
                     @if(isset($pengaturan->logo) && $pengaturan->logo)
-                        <img src="{{ asset('storage/uploads/' . $pengaturan->logo) }}" alt="Logo" class="h-12 w-auto object-contain">
+                        <img src="{{ storage_upload_url($pengaturan->logo) }}" alt="Logo" class="h-12 w-auto object-contain">
                     @else
                         <div class="h-12 w-12 bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-xl flex items-center justify-center font-bold text-2xl shadow-md">
                             <i class="fa-solid fa-graduation-cap"></i>
@@ -136,7 +136,7 @@
                     <div class="flex items-center gap-4 mb-6">
                         <div class="bg-white p-2 rounded-xl shadow-lg inline-block">
                             @if(isset($pengaturan) && $pengaturan->logo)
-                                <img src="{{ asset('storage/uploads/' . $pengaturan->logo) }}" alt="Logo" class="h-12 w-auto object-contain">
+                                <img src="{{ storage_upload_url($pengaturan->logo) }}" alt="Logo" class="h-12 w-auto object-contain">
                             @else
                                 <div class="w-12 h-12 flex items-center justify-center bg-blue-50 rounded-lg">
                                     <i class="fa-solid fa-graduation-cap text-2xl text-blue-600"></i>

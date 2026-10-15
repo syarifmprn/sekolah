@@ -17,5 +17,12 @@ class Prestasi extends Model
         ];
     }
 
-    //
+    public function getFirstDokumentasiUrlAttribute(): ?string
+    {
+        if (!$this->dokumentasi || !is_array($this->dokumentasi) || empty($this->dokumentasi[0])) {
+            return null;
+        }
+
+        return storage_upload_url($this->dokumentasi[0]);
+    }
 }
