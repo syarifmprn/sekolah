@@ -23,6 +23,131 @@
                     }
                 });
             }
+
+            // Bulk Actions Handler
+            function updateBulkState() {
+                const checkedBoxes = document.querySelectorAll('.alumni-checkbox:checked');
+                const allCheckboxes = document.querySelectorAll('.alumni-checkbox');
+                const count = checkedBoxes.length;
+                const bulkActionBar = document.getElementById('bulk-action-bar');
+                const bulkCountBadge = document.getElementById('bulk-count-badge');
+                const bulkCountText = document.getElementById('bulk-count-text');
+                const bulkAllInput = document.getElementById('bulk-all-input');
+                const checkAll = document.getElementById('check-all');
+                
+                if (!bulkActionBar) return;
+
+                if (count > 0) {
+                    bulkActionBar.classList.remove('hidden');
+                    bulkCountBadge.innerText = count;
+                    bulkCountText.innerText = count;
+                    bulkAllInput.value = '0';
+                } else {
+                    bulkActionBar.classList.add('hidden');
+                    bulkAllInput.value = '0';
+                }
+
+                if (checkAll && allCheckboxes.length > 0) {
+                    checkAll.checked = (count === allCheckboxes.length);
+                    checkAll.indeterminate = (count > 0 && count < allCheckboxes.length);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const checkAll = document.getElementById('check-all');
+                const checkboxes = document.querySelectorAll('.alumni-checkbox');
+
+                if (checkAll) {
+                    checkAll.addEventListener('change', function () {
+                        checkboxes.forEach(cb => {
+                            cb.checked = checkAll.checked;
+                        });
+                        updateBulkState();
+                    });
+                }
+
+                checkboxes.forEach(cb => {
+                    cb.addEventListener('change', updateBulkState);
+                });
+            });
+
+            function clearAllSelections() {
+                const checkAll = document.getElementById('check-all');
+                const checkboxes = document.querySelectorAll('.alumni-checkbox');
+                if (checkAll) {
+                    checkAll.checked = false;
+                    checkAll.indeterminate = false;
+                }
+                checkboxes.forEach(cb => {
+                    cb.checked = false;
+                });
+                updateBulkState();
+            }
+
+            function selectAllAlumniInDb() {
+                const checkAll = document.getElementById('check-all');
+                const checkboxes = document.querySelectorAll('.alumni-checkbox');
+                const bulkActionBar = document.getElementById('bulk-action-bar');
+                const bulkCountBadge = document.getElementById('bulk-count-badge');
+                const bulkCountText = document.getElementById('bulk-count-text');
+                const bulkAllInput = document.getElementById('bulk-all-input');
+
+                if (checkAll) checkAll.checked = true;
+                checkboxes.forEach(cb => {
+                    cb.checked = true;
+                });
+                if (bulkActionBar) {
+                    bulkActionBar.classList.remove('hidden');
+                    bulkCountBadge.innerText = '{{ $stats['total_alumni'] ?? 0 }}';
+                    bulkCountText.innerText = 'Semua ({{ $stats['total_alumni'] ?? 0 }})';
+                    bulkAllInput.value = '1';
+                }
+            }
+
+            function submitBulkStatus(status, isAll = false) {
+                const label = status === 'ya' ? 'Publik' : 'Private';
+                const checkedCount = document.querySelectorAll('.alumni-checkbox:checked').length;
+                const totalInDb = {{ $stats['total_alumni'] ?? 0 }};
+                const bulkStatusInput = document.getElementById('bulk-status-input');
+                const bulkAllInput = document.getElementById('bulk-all-input');
+                const bulkForm = document.getElementById('bulk-status-form');
+
+                if (!isAll && checkedCount === 0) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Pilih Alumni',
+                        text: 'Silakan centang setidaknya satu alumni terlebih dahulu.',
+                        confirmButtonColor: '#3b82f6'
+                    });
+                    return;
+                }
+
+                bulkStatusInput.value = status;
+                bulkAllInput.value = isAll ? '1' : '0';
+
+                const countText = isAll ? `seluruh ${totalInDb}` : `${checkedCount}`;
+                const titleText = isAll ? `Publikasikan Seluruh Alumni?` : `Jadikan ${label}?`;
+                const descText = `Apakah Anda yakin ingin mengubah status ${countText} data alumni menjadi ${label}?`;
+
+                Swal.fire({
+                    title: titleText,
+                    text: descText,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: status === 'ya' ? '#10b981' : '#64748b',
+                    cancelButtonColor: '#94a3b8',
+                    confirmButtonText: `Ya, Ubah ke ${label}`,
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        bulkForm.submit();
+                    }
+                });
+            }
+
+            function publishAllAlumniConfirm() {
+                submitBulkStatus('ya', true);
+            }
         </script>
     </x-slot>
 
@@ -141,6 +266,13 @@
                         @endif
                     </form>
 
+                    <button type="button" onclick="publishAllAlumniConfirm()" 
+                        class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 shadow-xs transition-colors w-full sm:w-auto cursor-pointer"
+                        title="Publikasikan semua data alumni sekaligus">
+                        <i class="fa-solid fa-globe"></i>
+                        <span>Publikasikan Semua</span>
+                    </button>
+
                     <a href="{{ route('admin.alumni.create') }}" 
                         class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-2 shadow-xs transition-colors w-full sm:w-auto">
                         <i class="fa-solid fa-plus"></i>
@@ -149,24 +281,65 @@
                 </div>
             </div>
 
+            <!-- Form Bulk Action (Hidden Form) -->
+            <form id="bulk-status-form" action="{{ route('admin.alumni.bulk-status') }}" method="POST" class="hidden">
+                @csrf
+                <input type="hidden" name="status" id="bulk-status-input" value="ya">
+                <input type="hidden" name="all" id="bulk-all-input" value="0">
+            </form>
+
+            <!-- Bulk Action Interactive Bar -->
+            <div id="bulk-action-bar" class="hidden px-4 sm:px-5 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100 flex flex-wrap items-center justify-between gap-3 text-xs transition-all">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-blue-600 text-white font-bold text-[11px]" id="bulk-count-badge">0</span>
+                    <span class="font-bold text-gray-800"><span id="bulk-count-text">0</span> alumni dipilih</span>
+                    <span class="text-gray-300 hidden sm:inline">&bull;</span>
+                    <button type="button" onclick="selectAllAlumniInDb()" class="text-blue-600 hover:text-blue-800 underline font-semibold cursor-pointer text-[11px] sm:text-xs">
+                        Pilih Seluruh Alumni ({{ $stats['total_alumni'] ?? 0 }})
+                    </button>
+                </div>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <button type="button" onclick="submitBulkStatus('ya', false)" 
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-xs active:scale-95 transition cursor-pointer text-[11px] sm:text-xs">
+                        <i class="fa-solid fa-globe text-[10px]"></i>
+                        <span>Jadikan Publik</span>
+                    </button>
+                    <button type="button" onclick="submitBulkStatus('tidak', false)" 
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-600 hover:bg-slate-700 text-white font-bold shadow-xs active:scale-95 transition cursor-pointer text-[11px] sm:text-xs">
+                        <i class="fa-solid fa-lock text-[10px]"></i>
+                        <span>Jadikan Private</span>
+                    </button>
+                    <button type="button" onclick="clearAllSelections()" 
+                        class="px-2.5 py-1.5 text-gray-500 hover:text-gray-700 font-semibold hover:bg-white rounded-lg transition cursor-pointer text-[11px] sm:text-xs">
+                        Batal
+                    </button>
+                </div>
+            </div>
+
             <!-- Table -->
             <div class="overflow-x-auto w-full">
                 <table class="table-fit w-full text-left border-collapse">
                     <thead>
                         <tr class="border-b border-gray-100 bg-gray-50/50 text-[10px] sm:text-[11px] font-bold text-gray-500 uppercase tracking-wider">
-                            <th class="py-3 px-1.5 sm:px-4 w-7 sm:w-12 text-center">No</th>
+                            <th class="py-3 px-2 sm:px-3 text-center w-7 sm:w-9">
+                                <input type="checkbox" id="check-all" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer w-4 h-4" title="Pilih Semua di Halaman Ini">
+                            </th>
+                            <th class="py-3 px-1 sm:px-2 w-7 sm:w-10 text-center hidden xs:table-cell">No</th>
                             <th class="py-3 px-2 sm:px-4">Alumni</th>
                             <th class="py-3 px-4 hidden md:table-cell">Angkatan & Jurusan</th>
                             <th class="py-3 px-4 hidden lg:table-cell">Profesi / Instansi</th>
                             <th class="py-3 px-4 hidden xl:table-cell">Testimoni</th>
-                            <th class="py-3 px-1.5 sm:px-4 text-center whitespace-nowrap"><span class="hidden sm:inline">Tampil di Web</span><span class="sm:hidden">Status</span></th>
+                            <th class="py-3 px-1.5 sm:px-4 text-center whitespace-nowrap">Status</th>
                             <th class="py-3 px-1.5 sm:px-4 text-center w-20 sm:w-28">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 text-xs">
                         @forelse ($data as $index => $item)
                             <tr class="hover:bg-gray-50/50 transition-colors group">
-                                <td class="py-3 px-1.5 sm:px-4 text-center font-medium text-gray-400 text-[11px] sm:text-xs">
+                                <td class="py-3 px-2 sm:px-3 text-center">
+                                    <input type="checkbox" name="ids[]" value="{{ $item->id }}" form="bulk-status-form" class="alumni-checkbox rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer w-4 h-4">
+                                </td>
+                                <td class="py-3 px-1 sm:px-2 text-center font-medium text-gray-400 text-[11px] sm:text-xs hidden xs:table-cell">
                                     {{ $data->firstItem() + $index }}
                                 </td>
                                 <td class="py-3 px-2 sm:px-4">
@@ -281,7 +454,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="py-12 text-center">
+                                <td colspan="8" class="py-12 text-center">
                                     <div class="flex flex-col items-center justify-center text-gray-400">
                                         <div class="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl mb-3 border border-gray-100">
                                             <i class="fa-solid fa-user-graduate"></i>

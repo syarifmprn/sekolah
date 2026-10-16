@@ -255,7 +255,7 @@ class FrontendController extends Controller
         ]);
 
         $data = $request->except(['foto']);
-        $data['tampil'] = 'ya'; // Langsung ditampilkan di direktori alumni
+        $data['tampil'] = 'tidak'; // Disimpan sebagai Private terlebih dahulu untuk diverifikasi admin
 
         if ($request->hasFile('foto')) {
             $data['foto'] = $request->file('foto')->store('uploads/alumni', 'public');
@@ -264,6 +264,6 @@ class FrontendController extends Controller
         Alumni::create($data);
 
         return redirect()->route('frontend.alumni')
-            ->with('success', 'Terima kasih! Cerita dan profil Anda berhasil dikirim dan kini telah ditampilkan di direktori alumni.');
+            ->with('success', 'Terima kasih! Cerita dan data profil Anda berhasil dikirim dan tersimpan sebagai Private. Pihak sekolah akan memverifikasi profil Anda sebelum ditampilkan di direktori publik.');
     }
 }

@@ -40,6 +40,7 @@ Route::middleware(['auth', 'role:superadmin,admin'])->prefix('admin')->name('adm
     Route::resource('ekstrakurikuler', \App\Http\Controllers\Admin\EkstrakurikulerController::class)->middleware('permission:ekstrakurikuler');
     Route::resource('prasarana', \App\Http\Controllers\Admin\PrasaranaController::class)->middleware('permission:prasarana');
     Route::resource('sarana', \App\Http\Controllers\Admin\SaranaController::class)->middleware('permission:sarana');
+    Route::post('alumni/bulk-status', [\App\Http\Controllers\Admin\AlumniController::class, 'bulkUpdateStatus'])->name('alumni.bulk-status')->middleware('permission:alumni');
     Route::resource('alumni', \App\Http\Controllers\Admin\AlumniController::class)->parameters(['alumni' => 'alumni'])->middleware('permission:alumni');
     Route::patch('alumni/{alumni}/toggle-tampil', [\App\Http\Controllers\Admin\AlumniController::class, 'toggleTampil'])->name('alumni.toggle-tampil')->middleware('permission:alumni');
     

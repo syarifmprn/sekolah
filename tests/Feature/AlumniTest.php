@@ -215,4 +215,53 @@ class AlumniTest extends TestCase
             'tampil' => 'tidak',
         ]);
     }
+
+    public function test_admin_can_bulk_publish_selected_alumni(): void
+    {
+        $admin = User::factory()->create([
+            'role' => 'admin',
+            'permissions' => ['alumni'],
+        ]);
+
+        $alumni1 = Alumni::create([
+            'nama' => 'Alumni A',
+            'tahun_lulus' => 2020,
+            'tampil' => 'tidak',
+        ]);
+
+        $alumni2 = Alumni::create([
+            'nama' => 'Alumni B',
+            'tahun_lulus' => 2021,
+            'tampil' => 'tidak',
+        ]);
+
+        $response = $this->actingAs($admin)->post(route('admin.alumni.bulk-status'), [
+            'ids' => [$alumni1->id, $alumni2->id],
+            'status' => 'ya',
+        ]);
+
+        $response->assertSessionHas('success');
+        $this->assertEquals('ya', $alumni1->fresh()->tampil);
+        $this->assertEquals('ya', $alumni2->fresh()->tampil);
+    }
+
+    public function test_admin_can_bulk_publish_all_alumni(): void
+    {
+        $admin = User::factory()->create([
+            'role' => 'admin',
+            'permissions' => ['alumni'],
+        ]);
+
+        $alumni1 = Alumni::create(['nama' => 'Alumni 1', 'tahun_lulus' => 2020, 'tampil' => 'tidak']);
+        $alumni2 = Alumni::create(['nama' => 'Alumni 2', 'tahun_lulus' => 2021, 'tampil' => 'tidak']);
+
+        $response = $this->actingAs($admin)->post(route('admin.alumni.bulk-status'), [
+            'all' => 1,
+            'status' => 'ya',
+        ]);
+
+        $response->assertSessionHas('success');
+        $this->assertEquals('ya', $alumni1->fresh()->tampil);
+        $this->assertEquals('ya', $alumni2->fresh()->tampil);
+    }
 }

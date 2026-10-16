@@ -155,4 +155,34 @@ class AlumniController extends Controller
         $label = $newStatus === 'ya' ? 'Publik' : 'Private';
         return back()->with('success', "Status alumni '{$alumni->nama}' berhasil diubah menjadi: {$label}.");
     }
+
+    public function bulkUpdateStatus(Request $request)
+    {
+        $status = $request->input('status', 'ya');
+        if (!in_array($status, ['ya', 'tidak'])) {
+            return back()->with('error', 'Pilihan status tidak valid.');
+        }
+
+        $label = $status === 'ya' ? 'Publik' : 'Private';
+
+        // Opsi jika memilih seluruh data (all)
+        if ($request->boolean('all')) {
+            $count = Alumni::count();
+            if ($count === 0) {
+                return back()->with('error', 'Belum ada data alumni yang tersimpan.');
+            }
+            Alumni::query()->update(['tampil' => $status]);
+            return back()->with('success', "Seluruh {$count} data alumni berhasil diubah statusnya menjadi: {$label}.");
+        }
+
+        // Opsi memilih berdasarkan checkbox ID yang dipilih
+        $ids = $request->input('ids', []);
+        if (empty($ids) || !is_array($ids)) {
+            return back()->with('error', 'Silakan pilih setidaknya satu alumni melalui centang checkbox.');
+        }
+
+        $updated = Alumni::whereIn('id', $ids)->update(['tampil' => $status]);
+
+        return back()->with('success', "Sebanyak {$updated} alumni yang dipilih berhasil diubah statusnya menjadi: {$label}.");
+    }
 }
