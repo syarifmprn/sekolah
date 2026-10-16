@@ -239,9 +239,25 @@
             }
 
             @media (max-width: 768px) {
-                .overflow-auto > table,
-                .overflow-x-auto > table {
+                .overflow-auto > table:not(.table-fit),
+                .overflow-x-auto > table:not(.table-fit) {
                     min-width: 640px;
+                }
+            }
+
+            @media (max-width: 1023px) {
+                main {
+                    overflow-y: auto !important;
+                    -webkit-overflow-scrolling: touch !important;
+                }
+                main > div {
+                    height: auto !important;
+                    min-height: 100% !important;
+                    overflow: visible !important;
+                }
+                main .bg-white.rounded-2xl {
+                    height: auto !important;
+                    max-height: none !important;
                 }
             }
         </style>
