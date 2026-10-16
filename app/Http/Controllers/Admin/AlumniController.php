@@ -146,4 +146,13 @@ class AlumniController extends Controller
         return redirect()->route('admin.alumni.index')
             ->with('success', 'Data alumni berhasil dihapus.');
     }
+
+    public function toggleTampil(Alumni $alumni)
+    {
+        $newStatus = $alumni->tampil === 'ya' ? 'tidak' : 'ya';
+        $alumni->update(['tampil' => $newStatus]);
+
+        $label = $newStatus === 'ya' ? 'Ditampilkan di Website' : 'Disembunyikan dari Website';
+        return back()->with('success', "Status publikasi alumni '{$alumni->nama}' berhasil diubah menjadi: {$label}.");
+    }
 }

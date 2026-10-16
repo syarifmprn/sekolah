@@ -41,6 +41,7 @@ Route::middleware(['auth', 'role:superadmin,admin'])->prefix('admin')->name('adm
     Route::resource('prasarana', \App\Http\Controllers\Admin\PrasaranaController::class)->middleware('permission:prasarana');
     Route::resource('sarana', \App\Http\Controllers\Admin\SaranaController::class)->middleware('permission:sarana');
     Route::resource('alumni', \App\Http\Controllers\Admin\AlumniController::class)->parameters(['alumni' => 'alumni'])->middleware('permission:alumni');
+    Route::patch('alumni/{alumni}/toggle-tampil', [\App\Http\Controllers\Admin\AlumniController::class, 'toggleTampil'])->name('alumni.toggle-tampil')->middleware('permission:alumni');
     
     // Menu & Pengaturan Website (dengan hak akses / permission)
     Route::resource('menu', \App\Http\Controllers\Admin\MenuController::class)->middleware('permission:menu');

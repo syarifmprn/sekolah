@@ -176,7 +176,7 @@
                                                 class="w-10 h-10 rounded-full object-cover border border-gray-200 shrink-0">
                                         @else
                                             <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 font-bold flex items-center justify-center border border-blue-100 shrink-0 uppercase text-xs">
-                                                {{ mb_substr($item->nama ?? 'A', 0, 2) }}
+                                                {{ strtoupper(substr($item->nama ?? 'A', 0, 2)) }}
                                             </div>
                                         @endif
                                         <div>
@@ -217,15 +217,21 @@
                                     </p>
                                 </td>
                                 <td class="py-3.5 px-4 text-center">
-                                    @if ($item->tampil === 'ya')
-                                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                            <i class="fa-solid fa-circle-check text-[9px]"></i> Tampil
-                                        </span>
-                                    @else
-                                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-gray-50 text-gray-600 border border-gray-200">
-                                            <i class="fa-solid fa-eye-slash text-[9px]"></i> Disembunyikan
-                                        </span>
-                                    @endif
+                                    <form action="{{ route('admin.alumni.toggle-tampil', $item->id) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" 
+                                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold transition-all shadow-xs cursor-pointer active:scale-95 {{ $item->tampil === 'ya' ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200' : 'bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200' }}" 
+                                            title="Klik untuk {{ $item->tampil === 'ya' ? 'sembunyikan dari website publik' : 'tampilkan di website publik' }}">
+                                            @if ($item->tampil === 'ya')
+                                                <i class="fa-solid fa-circle-check text-[10px] text-emerald-500"></i>
+                                                <span>Tampil di Web</span>
+                                            @else
+                                                <i class="fa-solid fa-eye-slash text-[10px] text-amber-500"></i>
+                                                <span>Disembunyikan</span>
+                                            @endif
+                                        </button>
+                                    </form>
                                 </td>
                                 <td class="py-3.5 px-4 text-center">
                                     <div class="flex items-center justify-center gap-1">

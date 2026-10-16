@@ -1,33 +1,38 @@
 <?php
 
-// Polyfill mb_strimwidth jika ekstensi mbstring belum aktif di PHP server
+// Polyfill fungsi mbstring jika ekstensi mbstring belum aktif di PHP server
+if (!function_exists('mb_strlen')) {
+    function mb_strlen(?string $string, ?string $encoding = null): int
+    {
+        return strlen((string) $string);
+    }
+}
+
+if (!function_exists('mb_substr')) {
+    function mb_substr(?string $string, int $start, ?int $length = null, ?string $encoding = null): string
+    {
+        $string = (string) $string;
+        return $length === null ? substr($string, $start) : substr($string, $start, $length);
+    }
+}
+
+if (!function_exists('mb_strwidth')) {
+    function mb_strwidth(?string $string, ?string $encoding = null): int
+    {
+        return strlen((string) $string);
+    }
+}
+
 if (!function_exists('mb_strimwidth')) {
     function mb_strimwidth(?string $string, int $start, int $width, string $trim_marker = '', ?string $encoding = null): string
     {
         $string = (string) $string;
-        $markerWidth = function_exists('mb_strwidth') ? mb_strwidth($trim_marker, $encoding) : strlen($trim_marker);
+        $markerWidth = mb_strwidth($trim_marker, $encoding);
         if ($width < $markerWidth) {
             return $trim_marker;
         }
 
         $targetWidth = $width - $markerWidth;
-
-        if (function_exists('mb_substr') && function_exists('mb_strwidth')) {
-            $result = '';
-            $currentWidth = 0;
-            $len = function_exists('mb_strlen') ? mb_strlen($string, $encoding) : strlen($string);
-            for ($i = $start; $i < $len; $i++) {
-                $char = mb_substr($string, $i, 1, $encoding);
-                $charWidth = mb_strwidth($char, $encoding);
-                if ($currentWidth + $charWidth > $targetWidth) {
-                    break;
-                }
-                $result .= $char;
-                $currentWidth += $charWidth;
-            }
-            return $result . $trim_marker;
-        }
-
         $sub = substr($string, $start, $targetWidth);
         return $sub . $trim_marker;
     }

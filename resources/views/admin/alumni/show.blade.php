@@ -63,7 +63,7 @@
                                 class="w-28 h-28 rounded-2xl object-cover border-4 border-white shadow-lg shrink-0 bg-white">
                         @else
                             <div class="w-28 h-28 rounded-2xl bg-white/10 backdrop-blur-md border-4 border-white flex items-center justify-center text-4xl font-bold uppercase shrink-0 text-white shadow-lg">
-                                {{ mb_substr($alumni->nama ?? 'A', 0, 2) }}
+                                {{ strtoupper(substr($alumni->nama ?? 'A', 0, 2)) }}
                             </div>
                         @endif
 

@@ -109,7 +109,7 @@
                                         class="w-12 h-12 rounded-full object-cover border-2 border-blue-100 shrink-0">
                                 @else
                                     <div class="w-12 h-12 rounded-full bg-blue-50 text-[#056ded] font-bold flex items-center justify-center border border-blue-100 shrink-0 uppercase text-xs">
-                                        {{ mb_substr($ft->nama ?? 'A', 0, 2) }}
+                                        {{ strtoupper(substr($ft->nama ?? 'A', 0, 2)) }}
                                     </div>
                                 @endif
                                 <div class="overflow-hidden">
@@ -187,7 +187,7 @@
                                         class="w-16 h-16 rounded-2xl object-cover border-2 border-blue-100 shadow-xs shrink-0">
                                 @else
                                     <div class="w-16 h-16 rounded-2xl bg-blue-50 text-[#056ded] font-bold flex items-center justify-center border border-blue-100 shrink-0 text-xl uppercase shadow-xs">
-                                        {{ mb_substr($item->nama ?? 'A', 0, 2) }}
+                                        {{ strtoupper(substr($item->nama ?? 'A', 0, 2)) }}
                                     </div>
                                 @endif
 
