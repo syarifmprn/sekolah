@@ -79,11 +79,11 @@
                                 @endif
                                 @if($alumni->tampil === 'ya')
                                     <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/90 text-white border border-emerald-400">
-                                        <i class="fa-solid fa-circle-check text-[10px] mr-1"></i> Tampil di Website
+                                        <i class="fa-solid fa-globe text-[10px] mr-1"></i> Publik
                                     </span>
                                 @else
-                                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-gray-600/90 text-white">
-                                        <i class="fa-solid fa-eye-slash text-[10px] mr-1"></i> Disembunyikan
+                                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-600/90 text-white border border-slate-500">
+                                        <i class="fa-solid fa-lock text-[10px] mr-1"></i> Private
                                     </span>
                                 @endif
                             </div>

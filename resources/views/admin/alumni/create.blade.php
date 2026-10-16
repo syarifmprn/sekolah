@@ -180,15 +180,15 @@
                                         <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors {{ old('tampil', 'ya') === 'ya' ? 'border-blue-500 bg-blue-50/20' : 'border-gray-200' }}">
                                             <input type="radio" name="tampil" value="ya" {{ old('tampil', 'ya') === 'ya' ? 'checked' : '' }} class="text-blue-600 focus:ring-blue-500">
                                             <div>
-                                                <span class="block text-xs font-bold text-gray-800">Tampilkan</span>
-                                                <span class="text-[10px] text-gray-400">Muncul di halaman publik</span>
+                                                <span class="block text-xs font-bold text-gray-800 flex items-center gap-1.5"><i class="fa-solid fa-globe text-emerald-500 text-xs"></i> Publik</span>
+                                                <span class="text-[10px] text-gray-400">Tampil di website publik</span>
                                             </div>
                                         </label>
                                         <label class="flex items-center gap-2 p-3 border rounded-xl cursor-pointer hover:bg-gray-50 transition-colors {{ old('tampil') === 'tidak' ? 'border-blue-500 bg-blue-50/20' : 'border-gray-200' }}">
                                             <input type="radio" name="tampil" value="tidak" {{ old('tampil') === 'tidak' ? 'checked' : '' }} class="text-blue-600 focus:ring-blue-500">
                                             <div>
-                                                <span class="block text-xs font-bold text-gray-800">Sembunyikan</span>
-                                                <span class="text-[10px] text-gray-400">Arsip admin saja</span>
+                                                <span class="block text-xs font-bold text-gray-800 flex items-center gap-1.5"><i class="fa-solid fa-lock text-slate-500 text-xs"></i> Private</span>
+                                                <span class="text-[10px] text-gray-400">Hanya tersimpan di admin</span>
                                             </div>
                                         </label>
                                     </div>

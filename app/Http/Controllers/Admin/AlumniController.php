@@ -152,7 +152,7 @@ class AlumniController extends Controller
         $newStatus = $alumni->tampil === 'ya' ? 'tidak' : 'ya';
         $alumni->update(['tampil' => $newStatus]);
 
-        $label = $newStatus === 'ya' ? 'Ditampilkan di Website' : 'Disembunyikan dari Website';
-        return back()->with('success', "Status publikasi alumni '{$alumni->nama}' berhasil diubah menjadi: {$label}.");
+        $label = $newStatus === 'ya' ? 'Publik' : 'Private';
+        return back()->with('success', "Status alumni '{$alumni->nama}' berhasil diubah menjadi: {$label}.");
     }
 }

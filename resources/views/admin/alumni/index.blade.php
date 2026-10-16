@@ -54,7 +54,7 @@
                     <i class="fa-solid fa-circle-check"></i>
                 </div>
                 <div class="min-w-0">
-                    <span class="text-[10px] sm:text-xs font-semibold text-gray-400 uppercase tracking-wider block truncate">Tampil di Web</span>
+                    <span class="text-[10px] sm:text-xs font-semibold text-gray-400 uppercase tracking-wider block truncate">Publik</span>
                     <h3 class="text-xl sm:text-2xl font-bold text-gray-800">{{ $stats['total_tampil'] ?? 0 }}</h3>
                 </div>
             </div>
@@ -129,9 +129,9 @@
                         <!-- Filter Status Tampil -->
                         <select name="tampil" onchange="this.form.submit()" 
                             class="py-2 pl-3 pr-8 border border-gray-200 rounded-lg text-xs focus:ring-blue-500 focus:border-blue-500 bg-white">
-                            <option value="">Status Tampil</option>
-                            <option value="ya" {{ request('tampil') == 'ya' ? 'selected' : '' }}>Tampil di Web</option>
-                            <option value="tidak" {{ request('tampil') == 'tidak' ? 'selected' : '' }}>Disembunyikan</option>
+                            <option value="">Semua Status</option>
+                            <option value="ya" {{ request('tampil') == 'ya' ? 'selected' : '' }}>Publik</option>
+                            <option value="tidak" {{ request('tampil') == 'tidak' ? 'selected' : '' }}>Private</option>
                         </select>
 
                         @if(request()->anyFilled(['search', 'tahun_lulus', 'jurusan', 'tampil']))
@@ -240,16 +240,14 @@
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit" 
-                                            class="inline-flex items-center gap-1 px-1.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold transition-all shadow-xs cursor-pointer active:scale-95 {{ $item->tampil === 'ya' ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200' : 'bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200' }}" 
-                                            title="Klik untuk {{ $item->tampil === 'ya' ? 'sembunyikan dari website publik' : 'tampilkan di website publik' }}">
+                                            class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold transition-all shadow-xs cursor-pointer active:scale-95 {{ $item->tampil === 'ya' ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200' : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300' }}" 
+                                            title="Klik untuk ubah status ke {{ $item->tampil === 'ya' ? 'Private' : 'Publik' }}">
                                             @if ($item->tampil === 'ya')
-                                                <i class="fa-solid fa-circle-check text-[9px] sm:text-[10px] text-emerald-500"></i>
-                                                <span class="hidden xs:inline">Tampil</span>
-                                                <span class="xs:hidden">Aktif</span>
+                                                <i class="fa-solid fa-globe text-[9px] sm:text-[10px] text-emerald-500"></i>
+                                                <span>Publik</span>
                                             @else
-                                                <i class="fa-solid fa-eye-slash text-[9px] sm:text-[10px] text-amber-500"></i>
-                                                <span class="hidden xs:inline">Sembunyi</span>
-                                                <span class="xs:hidden">Draft</span>
+                                                <i class="fa-solid fa-lock text-[9px] sm:text-[10px] text-slate-500"></i>
+                                                <span>Private</span>
                                             @endif
                                         </button>
                                     </form>
